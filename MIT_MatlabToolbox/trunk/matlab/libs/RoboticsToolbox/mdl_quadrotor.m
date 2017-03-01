@@ -168,11 +168,11 @@ quadEDT.sampletime                  = 0.005;
 %reference values
 %----
 %yaw
-quadEDT.yawStep_amplitude           = 0.1;
+quadEDT.yawStep_amplitude           = 0;
 quadEDT.yawStep_time                = 5.5;
 quadEDT.yawStep_duration            = 2.5;
 %pitch
-quadEDT.pitchStep_amplitude         = 0.2; %0.1
+quadEDT.pitchStep_amplitude         = 0; %0.1
 quadEDT.pitchStep_time              = 3;
 quadEDT.pitchStep_duration          = 1.5;
 %roll
@@ -181,7 +181,7 @@ quadEDT.rollStep_time               = 3;
 quadEDT.rollStep_duration           = 1;
 %altitude
 quadEDT.takeoff_duration            = 1;
-quadEDT.altitude                    = -1.1;
+quadEDT.altitude                    = -0.6;
 %----
 
 %Vision
