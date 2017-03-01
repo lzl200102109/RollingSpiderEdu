@@ -117,31 +117,35 @@ A_dec   = inv(Veig_nrm)*A*Veig_nrm;
 B_dec   = inv(Veig_nrm)*B;
 
 % Define decoupled subsystems
-A_dec_x   = ...
-B_dec_x   = ...
+A_dec_x   = A_dec(1:4, 1:4);
+B_dec_x   = B_dec(1:4, 3);
 
-A_dec_z   = ...
-B_dec_z   = ...
+A_dec_z   = A_dec(5:6, 5:6);
+B_dec_z   = B_dec(5:6, 1);
 
-A_dec_y   = ...
-B_dec_y   = ...
+A_dec_y   = A_dec(7:10, 7:10);
+B_dec_y   = B_dec(7:10, 4);
 
-A_dec_yaw = ...
-B_dec_yaw = ...
+A_dec_yaw = A_dec(11:12, 11:12);
+B_dec_yaw = B_dec(11:12, 2);
 
 
-% Compute decoupled  subsystems Transfer Function (TF)
+% Compute decoupled subsystems Transfer Function (TF)
 % TF from ... to x
-G_x = ...
+[num_x, den_x] = ss2tf(A_dec_x, B_dec_x, [1 0 0 0], 0);
+G_x = tf(num_x, den_x);
 
 % TF from ... to y
-G_y = ...
+[num_y, den_y] = ss2tf(A_dec_y, B_dec_y, [-1 0 0 0], 0);
+G_y = tf(num_y, den_y);
 
 % TF from ... to z
-G_z = ...
+[num_z, den_z] = ss2tf(A_dec_z, B_dec_z, [1 0], 0);
+G_z = tf(num_z, den_z);
 
 % TF from ... to yaw
-G_yaw = ...
+[num_yaw, den_yaw] = ss2tf(A_dec_yaw, B_dec_yaw, [1 0], 0);
+G_yaw = tf(num_yaw, den_yaw);
 
 % Now place your own poles for the decoupled subsystems separately
 
@@ -151,13 +155,11 @@ yawpoles    = [-3;-3.1];
 zpoles      = [-2;-2.1];               % Play around with poles here: Slow poles [-2;-2.1], Fast poles [-5;-5.1];
 %zpoles     = [-5;-5.1];               % Play around with poles here: Slow poles [-2;-2.1], Fast poles [-5;-5.1];
 
-K_dec_x     = ...
-K_dec_z     = ...
-K_dec_y     = ...    
-K_dec_yaw   = ...
+K_dec_x     = place(A_dec_x, B_dec_x, xpoles);
+K_dec_z     = place(A_dec_y, B_dec_y, ypoles);
+K_dec_y     = place(A_dec_z, B_dec_z, zpoles);
+K_dec_yaw   = place(A_dec_yaw, B_dec_yaw, yawpoles);
 
 % Compute Full-state feedback for 'original' system
 K_poleplace = [K_dec_x K_dec_z K_dec_y K_dec_yaw]*inv(Veig_nrm);
-K_poleplace(abs(K_poleplace)<1e-7)=0;
-
-
+K_poleplace(abs(K_poleplace)<1e-7) = 0;
