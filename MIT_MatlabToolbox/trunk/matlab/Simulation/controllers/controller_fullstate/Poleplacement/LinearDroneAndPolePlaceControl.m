@@ -10,8 +10,9 @@
 % ==================================
 
 %Load drone parameters from RoboticsToolbox
-mdl_quadrotor
-
+% clear; clc;
+% mdl_quadrotor
+parameters_estimationcontrol
 
 %% 1.1) Simplified Dynamics
 
@@ -52,8 +53,8 @@ iW = ...
 
 %%Linearization Point = Hover
 %-----------
-state_equil = [0; 0; -1.5; 0 ;0 ;0 ;0 ;0 ;0 ;0 ;0 ;0 ]; %x_eq
-input_equil = [-quad.g*quad.M ;0 ;0 ;0];                %u_eq
+state_equil = [0; 0; -1.5; 0 ;0 ;0 ;0 ;0 ;0 ;0 ;0 ;0 ];             %x_eq
+input_equil = [-quad.g*quad.M ;0 ;0 ;0];                          %u_eq_p
 equil       = [state_equil; input_equil];
 
 %%Dynamics
@@ -82,7 +83,8 @@ o_ddot_jacobian_eql = subs(o_ddot_jacobian,symsvector,equil);
 
 matrixAB = [P_dot_jacobian_eql;O_dot_jacobian_eql;p_ddot_jacobian_eql;o_ddot_jacobian_eql];
 A = double(matrixAB(1:12,1:12))
-B = double(matrixAB(1:12,13:16))
+B_p = double(matrixAB(1:12,13:16));
+B_m = B_p * controlHelperParams.Ts2Q
 %Note x_nonlinearSys = x_eq + x_linearizedSys! Thus, x0_linearizedSys = x0_nonlinear - x_eq; 
 %Note u_nonlinearSys = u_eq + x_linearizedSys!
 

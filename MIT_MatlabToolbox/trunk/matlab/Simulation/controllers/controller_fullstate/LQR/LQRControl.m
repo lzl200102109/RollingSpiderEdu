@@ -13,8 +13,8 @@ mdl_quadrotor
 %Use linearizeDrone_motorcmdTostate.slx and Simulink's ControlDesign/Linear Analysis
 %to find a linear plant model.
 
- A = linsys1.a;
- B = linsys1.b;
+ A = linsys1.a
+ B = linsys1.b
  C = eye(12);
  D = zeros(12,4);
  
