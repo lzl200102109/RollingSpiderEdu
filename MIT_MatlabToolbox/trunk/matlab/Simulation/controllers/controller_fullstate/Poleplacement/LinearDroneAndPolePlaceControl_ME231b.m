@@ -54,10 +54,9 @@ Body2Global = Ryaw*Rpitch*Rroll;
 Global2Body = simplify(Body2Global^-1);
 
 %Transformation from body rates p-q-r to euler rates yaw pitch roll
-iW = ...
-    [0        sin(roll)          cos(roll);             
-     0        cos(roll)*cos(pitch) -sin(roll)*cos(pitch);
-     cos(pitch) sin(roll)*sin(pitch) cos(roll)*sin(pitch)] / cos(pitch);
+iW = [0        sin(roll)          cos(roll);             
+      0        cos(roll)*cos(pitch) -sin(roll)*cos(pitch);
+      cos(pitch) sin(roll)*sin(pitch) cos(roll)*sin(pitch)] / cos(pitch);
 
 %%Linearization Point = Hover
 %-----------
@@ -98,7 +97,7 @@ B = double(matrixAB(1:12,13:16));
 %Note u_nonlinearSys = u_eq + x_linearizedSys!
 
 %% 1.2) Linearizing Full Nonlinear Simulink Model (the model from Robotics Toolbox)
-%use Simulation/controllers/controller_fullstate/Poleplacement/linearizeDrone(...).slx and Simulink's ControlDesign/Linear Analysis
+%use Simulation/controllers/controller_fullstate/Poleplacement/linearizeDrone_umechTostate.slx and Simulink's ControlDesign/Linear Analysis
 
 %% 2.1) Designing Full-state Feedback Controllers with Simplified Dynamics Model (1.1) via Pole Placement
 
@@ -131,19 +130,19 @@ B_dec_yaw = B_dec(11:12, 2);
 
 
 % Compute decoupled subsystems Transfer Function (TF)
-% TF from ... to x
+% TF from tau_y to x
 [num_x, den_x] = ss2tf(A_dec_x, B_dec_x, [1 0 0 0], 0);
 G_x = tf(num_x, den_x);
 
-% TF from ... to y
+% TF from tau_x to y
 [num_y, den_y] = ss2tf(A_dec_y, B_dec_y, [-1 0 0 0], 0);
 G_y = tf(num_y, den_y);
 
-% TF from ... to z
+% TF from T to z
 [num_z, den_z] = ss2tf(A_dec_z, B_dec_z, [1 0], 0);
 G_z = tf(num_z, den_z);
 
-% TF from ... to yaw
+% TF from tau_z to yaw
 [num_yaw, den_yaw] = ss2tf(A_dec_yaw, B_dec_yaw, [1 0], 0);
 G_yaw = tf(num_yaw, den_yaw);
 
