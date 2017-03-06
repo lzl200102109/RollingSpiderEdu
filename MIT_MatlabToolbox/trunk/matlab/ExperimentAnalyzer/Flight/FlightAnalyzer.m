@@ -254,3 +254,14 @@ if exist('RSrun_batteryStatus','var')
     xlabel({'t [s]'},'Interpreter','latex');
     ylabel({'\%'},'Interpreter','latex');
 end;
+
+%% Position Reference Trajectory
+
+figure('Name','Positon Reference Trajectory'); clf; hold on; grid on;
+plot(RSrun_pos_ref(:,1), RSrun_pos_ref(:,2:3));
+
+set(gca, 'FontSize', fs_axis);
+l = legend('x_{ref}', 'y_{ref}');
+set(l, 'FontSize', fs_l);
+xlabel('Time [s]', 'FontSize', fs_axis);
+ylabel('Position [m]', 'FontSize', fs_axis);

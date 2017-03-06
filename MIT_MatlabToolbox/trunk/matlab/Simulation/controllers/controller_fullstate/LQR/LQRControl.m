@@ -53,13 +53,13 @@ rho = 15;
 
 pos_x_wght        = 0.3/3;
 pos_y_wght        = 0.3/3;
-pos_z_wght        = 1.0/3;
+pos_z_wght        = 0.4/3;
 
-orient_ypr_wghts  = 0.25/3;  %weights for each of the three angles of orientations(attitude)
+orient_ypr_wghts  = 0.25/3;  % weights for each of the three angles of orientations(attitude)
 
-dpos_wghts        = 0.05/3; %weights for each of the three velocities of position
+dpos_wghts        = 0.1/3;   % weights for each of the three velocities of position
 
-dorient_pqr_wghts = 0.6/3; %weights for each of the three angular rates of orientations(attitude)
+dorient_pqr_wghts = 0.6/3;   % weights for each of the three angular rates of orientations(attitude)
 
 rho = 10;
 

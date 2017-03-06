@@ -2,6 +2,18 @@ close all;
 
 fs_l = 20; fs_axis = 20; lw = 2;
 
+%%
+figure(3); 
+plot(RSrun_pos_ref(:,1), RSrun_pos_ref(:,2:3));
+
+set(gca, 'FontSize', fs_axis);
+l = legend('x_{ref}', 'y_{ref}');
+set(l, 'FontSize', fs_l);
+xlabel('Time [s]', 'FontSize', fs_axis);
+ylabel('Position [m]', 'FontSize', fs_axis);
+
+%%
+
 figure(1); clf; grid on; hold on;
 plot(posComparision(:,1), posComparision(:,2:4), '--', 'LineWidth', lw);
 plot(posComparision(:,1), posComparision(:,5:end), 'LineWidth', lw);
