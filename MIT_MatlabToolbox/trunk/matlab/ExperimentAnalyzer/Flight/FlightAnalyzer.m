@@ -184,45 +184,44 @@ visUpdatesAvlble = (RSrun_posVIS(:,2)~=-99);
     
 figure('Name','Positions & Velocities','Position',[100 100 600 700]);
 subplot(6,1,1:2);
-
 %Trajectory
-plot(RSrun_states_estim(:,3),RSrun_states_estim(:,2));
-hold all;
+grid on; hold on;
+plot(RSrun_states_estim(:,3),RSrun_states_estim(:,2), 'LineWidth', lw);
+plot(RSrun_pos_ref(:,3), RSrun_pos_ref(:,2), 'LineWidth', lw);
 plot(RSrun_states_estim(1,3),RSrun_states_estim(1,2),'rx');
 plot(RSrun_states_estim(end,3),RSrun_states_estim(end,2),'gx');
 plot(RSrun_posVIS(visUpdatesAvlble,3),RSrun_posVIS(visUpdatesAvlble,2),'o-');
 set(gca,'xaxisLocation','top')
-legend({'$\hat{Pos}$','start','finish','$\hat{Pos}_{VIS}$'},'Interpreter', 'latex')
-ylim([-.3 .3]);
+legend({'$\hat{Pos}$','$Pos_{ref}$','start','finish','$\hat{Pos}_{VIS}$'},'Interpreter', 'latex')
 xlabel({'$Y$ [m]'},'Interpreter','latex');
 ylabel({'$X$ [m]'},'Interpreter','latex');
-axis equal
+axis equal; ylim([-0.3, 1.2]);
 
 %Positions
-h(1)=subplot(12,1,5:6);
+h(1)=subplot(12,1,5:6); grid on; hold on;
 axis normal
-plot(RSrun_states_estim(:,1),RSrun_states_estim(:,2));hold all;
+plot(RSrun_states_estim(:,1),RSrun_states_estim(:,2));
 plot(RSrun_posVIS(visUpdatesAvlble,1),RSrun_posVIS(visUpdatesAvlble,2),'o'); 
+ylim([-0.5,1.5]);
 legend({'$\hat{X}$','$\hat{X}_{VIS}$'},'Interpreter','latex')
-ylim([-.7 .7])
 ylabel({'$X$ [m]'},'Interpreter','latex');
 
-h(2)=subplot(12,1,7:8);
-plot(RSrun_states_estim(:,1),RSrun_states_estim(:,3));   hold all;
+h(2)=subplot(12,1,7:8); grid on; hold on;
+plot(RSrun_states_estim(:,1),RSrun_states_estim(:,3));
 plot(RSrun_posVIS(visUpdatesAvlble,1),RSrun_posVIS(visUpdatesAvlble,3),'o');
+ylim([-1.5,0.5]);
 legend({'$\hat{Y}$','$\hat{Y}_{VIS}$'},'Interpreter','latex')
-ylim([-.5 .5])
 ylabel({'$Y$ [m]'},'Interpreter','latex');
 
 %Velocities
-h(3)=subplot(12,1,9:10);
-plot(RSrun_opticalFlow(:,1),20*RSrun_opticalFlow(:,2),'.-'); hold all;
+h(3)=subplot(12,1,9:10); grid on; hold on;
+plot(RSrun_opticalFlow(:,1),20*RSrun_opticalFlow(:,2),'.-');
 plot(RSrun_states_estim(:,1),RSrun_states_estim(:,8));
 ylabel('$\dot x$ [m/s]','Interpreter','latex');
 legend({'$\dot{x}_{opt. flow}$' '$\hat{\dot x}$'},'Interpreter','latex');
 
-h(4)=subplot(12,1,11:12);
-plot(RSrun_opticalFlow(:,1),20*RSrun_opticalFlow(:,3),'.-'); hold all;
+h(4)=subplot(12,1,11:12); grid on; hold on;
+plot(RSrun_opticalFlow(:,1),20*RSrun_opticalFlow(:,3),'.-');
 plot(RSrun_states_estim(:,1),RSrun_states_estim(:,9));
 xlabel({'t [s]'},'Interpreter','latex');
 ylabel('$\dot y$ [m/s]','Interpreter','latex');
@@ -258,10 +257,12 @@ end;
 %% Position Reference Trajectory
 
 figure('Name','Positon Reference Trajectory'); clf; hold on; grid on;
-plot(RSrun_pos_ref(:,1), RSrun_pos_ref(:,2:3));
-
+plot(RSrun_pos_ref(:,1), RSrun_pos_ref(:,2:3), '--', 'LineWidth', lw);
+plot(RSrun_states_estim(:,1),RSrun_states_estim(:,2), 'LineWidth', lw);hold all;
+plot(RSrun_states_estim(:,1),RSrun_states_estim(:,3), 'LineWidth', lw);hold all;
+ylim([-1.5, 1.5])
 set(gca, 'FontSize', fs_axis);
-l = legend('x_{ref}', 'y_{ref}');
+l = legend('X_{ref}', 'Y_{ref}', 'X', 'Y');
 set(l, 'FontSize', fs_l);
 xlabel('Time [s]', 'FontSize', fs_axis);
 ylabel('Position [m]', 'FontSize', fs_axis);
