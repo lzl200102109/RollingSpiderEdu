@@ -801,7 +801,7 @@ void RSEDU_control(HAL_acquisition_t* hal_sensors_data, HAL_command_t* hal_senso
     static double powerGain_paramsFile = 0.1;
 
     // Reference Position
-    static int waitCycles = 1000;
+    static int waitCycles;
     static double refCycles = 400.0;
 
     //data handling
